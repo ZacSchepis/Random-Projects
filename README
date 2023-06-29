@@ -1,1 +1,10 @@
+This is my repo for any random projects that I feel like doing. Nothing much is in this at this moment besides one thing
 
+### Daily Searches:
+As of time of writing this, it for sure works on Microsoft Edge
+on my windows 11 laptop. You can probably mess with the "app_name" variable in the DailySearches.py file if you want to try running it through other browsing apps
+It is also worth mentioning that you should turn off the autofill before running:
+edge://settings/search/
+Disable both of these and it should work smoothly:
+Show me search and site suggestions using my typed characters
+Show me suggestions from history, favorites and other data on this device using my typed characters
