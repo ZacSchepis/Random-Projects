@@ -1,8 +1,10 @@
 import argparse
 from DailySearches import search
 # To run:
-# python3 Project.py -d='device' -v=0
-# Defaults: -d='pc', -v=1
+# python3 Project.py --device 'device' --verbose 0
+# for some reason, my laptop had an issue with this (or maybe it was something else?) so to be sure I did the above
+# to maximize laziness.
+# Defaults: --device='pc', --verbose-=1
 # --verbose of 1 will display in the terminal of what's happening at each step, of 0 won't display anything
 # --device of 'pc' will do 34 searches on Microsoft Edge on PC, 'mobile' will do 20 searches on "mobile" micrsoft edge
 #      of 'both' will do searches for both devices
