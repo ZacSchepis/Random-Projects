@@ -18,13 +18,14 @@ def main():
     )
     args = parser.parse_args()
     assert(args.verbose >= 0 and args.verbose <2)
-    if args.device == 'both':
+
+    if str(args.device) == 'both':
         print('About to do searches for mobile and pc')
         search('pc',args.verbose)
         search('mobile', args.verbose)
         return
-    elif (args.device != 'pc') and (args.device != 'mobile'):
-        print(f'unexpected device type "{args.device}," defaulting to type "pc"')
+    if (args.device != 'pc') and (args.device != 'mobile') and (args.device != 'both'):
+        print(f'Unexpected device type "{args.device}", defaulting to type "pc"')
         args.device = 'pc'
         search(args.device, args.verbose)
         return
