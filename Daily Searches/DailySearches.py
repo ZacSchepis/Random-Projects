@@ -9,7 +9,9 @@ app_name = 'MICROSOFT EDGE'
 # 150 PC, 100 Mobile, 20 Edge bonus...
 # at 5 pts each
 # 30 PC searches, 20 Mobile searches, and 4 additional
-
+# July2nd Fix: changed some key presses to instead use pyauto.hotkey()
+# Made it hopefuly robust too, so now it should work with other browsers (in theory)
+#    regardless of if you have searchbar suggestions turned off or not
 def click_searchbar(q: str, verbose: int):
     """
     Clicks into the search bar, displays relevant messages and also enters the search
@@ -26,17 +28,18 @@ def click_enter(verbose:int):
     of the search being completed while also actually pressing it
     """
     if verbose == 1:print('Pressing enter key...')
+    pyautogui.press('escape')
     pyautogui.press('enter')
     if verbose == 1: print('Search completed.')
 
-def enter_search(q: str, device_type: str, verbose:int):
+def enter_search(q: str, verbose:int):
     """
     Basically a wrapper for a wrapper function. Displays the current
     search string (if v==1), and then clicks into the search bar and presses enter
     using those respective functions
     """
     if verbose == 1: print(f'About to enter search: {q}')
-    click_searchbar(q, device_type, verbose)
+    click_searchbar(q, verbose)
     click_enter(verbose)
 
 def open_edge(verbose:int):
@@ -55,13 +58,8 @@ def open_devtools(verbose: int):
     """
     if verbose == 1: print('the devtools page part has been opened')
     keys = ['ctrl', 'shift', 'i']
-    sleep(4)
-    for key in keys:
-        pyautogui.keyDown(key)
-        # sleep(1)
-    for key in keys:
-        pyautogui.keyUp(key)
-        # sleep(1)
+    sleep(2)
+    pyautogui.hotkey(keys,interval=1.0)
 
 def search(device_type:str, verbose:int):
     """
@@ -88,7 +86,7 @@ def search(device_type:str, verbose:int):
             search_str = next_char()
             if verbose==1: print(f'UPDATED SEARCH_STR: {search_str}')
         search_str += next_char()
-        enter_search(search_str, device_type, verbose)
+        enter_search(search_str, verbose)
 
 
 def next_char():
@@ -105,4 +103,3 @@ def next_char():
     ]
     idxs = [x for x in range(len(chars))]
     return random.choice(chars[random.choice(idxs)])
-
