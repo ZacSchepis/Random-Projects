@@ -1,13 +1,5 @@
 import argparse
 from DailySearches import search
-# To run:
-# python3 Project.py --device 'device' --verbose 0
-# for some reason, my laptop had an issue with this (or maybe it was something else?) so to be sure I did the above
-# to maximize laziness.
-# Defaults: --device='pc', --verbose-=1
-# --verbose of 1 will display in the terminal of what's happening at each step, of 0 won't display anything
-# --device of 'pc' will do 34 searches on Microsoft Edge on PC, 'mobile' will do 20 searches on "mobile" micrsoft edge
-#      of 'both' will do searches for both devices
 def main():
     parser = argparse.ArgumentParser(description='microsoft edge daily searches')
     parser.add_argument(
@@ -16,15 +8,21 @@ def main():
     parser.add_argument(
         '--verbose','-v', type=int, default=1, help="displays some messages in the terminal about what's going on"
     )
+    parser.add_argument(
+        '--hasran','r', type=int, default=1, help='skips over re-making the .bat/.sh file for optimizing laziness'
+    )
     args = parser.parse_args()
     assert(args.verbose >= 0 and args.verbose <2)
-
+    print('To maximize laziness, run python3 Project.py --hasran 0\nThis will create a file to make doing these quicker\nso you can just do one quick command and you are set')
+    if args.hasran == 0:
+        from DailySearches import lazy_script
+        lazy_script(args.hasran)
     if str(args.device) == 'both':
         print('About to do searches for mobile and pc')
         search('pc',args.verbose)
         search('mobile', args.verbose)
         return
-    if (args.device != 'pc') and (args.device != 'mobile') and (args.device != 'both'):
+    elif (args.device != 'pc') and (args.device != 'mobile') and (args.device != 'both'):
         print(f'Unexpected device type "{args.device}", defaulting to type "pc"')
         args.device = 'pc'
         search(args.device, args.verbose)
