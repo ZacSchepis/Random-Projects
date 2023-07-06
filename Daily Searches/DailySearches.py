@@ -9,6 +9,7 @@ app_name = 'MICROSOFT EDGE'
 # 150 PC, 100 Mobile, 20 Edge bonus...
 # at 5 pts each
 # 30 PC searches, 20 Mobile searches, and 4 additional
+
 def click_searchbar(q: str, verbose: int):
     """
     Clicks into the search bar, displays relevant messages and also enters the search
@@ -67,18 +68,20 @@ def lazy_script(hasran: int =1):
     """
     if hasran == 0:
         from os.path import expanduser
+        from os import getcwd
         from platform import system
         home_dir = expanduser("~")
         os_t = system()
         sep = '\\' if os_t == "Windows" else '/' 
         file_type = '.bat' if os_t == 'Windows' else '.sh'
         lazy_path = f'{home_dir}{sep}'
+        origin_path = getcwd()
         if os_t == 'Linux':
             print(f'Or, alternative lazy alias:\necho "alias lazysearch="{lazy_path}lazysearch.sh"" >> ~/.bashrc && source ~/.bashrc\n'+
                   f'Paste that into your Linux command line and it should in theory work as intended (have not tested this out myself yet)')
         with open(f'{lazy_path}lazysearch{file_type}', 'w') as file:
             try:
-                file.write(f"python3 '{lazy_path}Project.py' --device 'both' -v=1 -r=1")
+                file.write(f"python3 '{origin_path}{sep}Project.py' --device 'both' -v=1 -r=1")
                 com = ".\lazysearch.bat" if os_t == "Windows" else "./lazysearch.sh (run chmod +x lazysearch at)" +lazy_path+'lazysearch.sh' 
                 print(f'Created: "lazysearch{file_type}" at "{lazy_path}lazysearch{file_type}". Run: {com}')
             except:
