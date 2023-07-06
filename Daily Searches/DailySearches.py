@@ -81,7 +81,7 @@ def lazy_script(hasran: int =1):
                   f'Paste that into your Linux command line and it should in theory work as intended (have not tested this out myself yet)')
         with open(f'{lazy_path}lazysearch{file_type}', 'w') as file:
             try:
-                file.write(f"python3 '{origin_path}{sep}Project.py' --device 'both' -v=1 -r=1")
+                file.write(f'python3 "{origin_path}{sep}Project.py" --device "both" -v=1 -r=1')
                 com = ".\lazysearch.bat" if os_t == "Windows" else "./lazysearch.sh (run chmod +x lazysearch at)" +lazy_path+'lazysearch.sh' 
                 print(f'Created: "lazysearch{file_type}" at "{lazy_path}lazysearch{file_type}". Run: {com}')
             except:
@@ -130,3 +130,4 @@ def next_char():
     ]
     idxs = [x for x in range(len(chars))]
     return random.choice(chars[random.choice(idxs)])
+
