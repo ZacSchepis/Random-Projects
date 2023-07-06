@@ -9,7 +9,7 @@ def main():
         '--verbose','-v', type=int, default=1, help="displays some messages in the terminal about what's going on"
     )
     parser.add_argument(
-        '--hasran','r', type=int, default=1, help='skips over re-making the .bat/.sh file for optimizing laziness'
+        '--hasran','-r', type=int, default=1, help='skips over re-making the .bat/.sh file for optimizing laziness'
     )
     args = parser.parse_args()
     assert(args.verbose >= 0 and args.verbose <2)
