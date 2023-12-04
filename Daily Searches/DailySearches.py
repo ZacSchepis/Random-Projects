@@ -47,6 +47,8 @@ def open_edge(verbose:int):
     """
     if verbose == 1: print(f'{app_name} app has been opened')
     app.open(app_name)
+    sleep(2)
+    pyautogui.hotkey(['ctrl', 'n'])
 
 def open_devtools(verbose: int):
     """
@@ -87,6 +89,11 @@ def lazy_script(hasran: int =1):
             except:
                 print('There was an error in attempting to create the lazy .bat/.sh file :(')
                 return
+            
+def searchBoth(verbose: int):
+        search('pc', verbose)
+        search('mobile', verbose)
+
 def search(device_type:str, verbose:int):
     """
     This function does my daily searches for me.
@@ -130,4 +137,3 @@ def next_char():
     ]
     idxs = [x for x in range(len(chars))]
     return random.choice(chars[random.choice(idxs)])
-
