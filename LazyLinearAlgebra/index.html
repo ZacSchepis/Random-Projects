@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Operations Calculator</title>
+    <script>
+        // Your JavaScript code goes here
+        // You can copy and paste your matrix determinant calculation code here
+    </script>
+        <script>
+            function parseMatrix(matrix_id) {
+                const matrixInput = document.getElementById(matrix_id).value
+                const rows = matrixInput.trim().split('\n');
+                const matrix = rows.map( row => row.split(/\s+/).map(Number));
+                // document.getElementById('rendered').innerHTML = `\\[ ${latex_matrix} \\]`
+                // MathJax.typeset();
+                return matrix;
+            }
+            function formatMatrix(matrix){
+                return `\\[ ${Matrix.Utilities.toLaTeX(matrix)} \\]`
+            }
+            function matrixOps(operation){
+                let matrix1 = parseMatrix("matrixInput1");
+                let matrix2 = parseMatrix("matrixInput2")
+                let res = []
+                if(operation === "add"){
+                    res = Matrix.add(matrix1, matrix2)
+                }
+                else if(operation === "mult"){
+                    res = Matrix.multiply(matrix1, matrix2)
+                }
+                document.getElementById('rendered').innerHTML = formatMatrix(res)
+                MathJax.typeset();
+
+            }
+            // You can add additional JavaScript code for user interaction here
+        </script>
+    <script src="./Eigen.js"></script>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            packages: {'[+]':['ams']},
+            displayMath: [
+                ['$$', '$$'], ['\\[', '\\]']
+            ],
+            processEscapes: true
+          },
+          svg: {
+            fontCache: 'global'
+          },
+          loader: {load: ['[tex]/ams']}
+        };
+    </script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <h1>Matrix Operations Calculator</h1>
+    <!-- <label for="matrixInput">Enter Matrix:</label> -->
+    <!-- <textarea id="matrixInput" rows="5" cols="50"></textarea> -->
+    <label for="matrixInput1">Matrix 1:</label>
+    <textarea id="matrixInput1" placeholder="Enter matrix 1"></textarea>
+    
+    <label for="matrixInput2">Matrix 2:</label>
+    <textarea id="matrixInput2" placeholder="Enter matrix 2"></textarea>
+    <button onclick="matrixOps('add')">Add</button>
+    <!-- <button onclick="parseMatricesAndCalculate('subtract')">Subtract</button> -->
+    <button onclick="matrixOps('mult')">Multiply</button>
+
+   
+    <br>
+
+    <button onclick="parseMatrix()">Render Matrix</button>
+    
+    <br>
+    <!-- <label for="matrixInput">Enter Matrix</label> -->
+
+    <div id="rendered"></div>
+    <!-- <p>Matrix</p>
+    <div id="matrix1"></div> -->
+</body>
+</html>
