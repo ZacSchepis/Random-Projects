@@ -64,7 +64,28 @@ const RowOps = {
                 mult*A[s][e] * this.CoFactor(s, e)),
              0)
     },
-
+    // With LU Decomposition, we eliminate the subdiagonal entreis
+    // in the first column of A 
+    // [
+            // 1 2 3 4 -> 1 2 3 4 (a_{2,1} / a_{1, 1} - A_{2} (row 2))
+            // 5 6 7 8 -> 
+            // 9 1 2 4
+            // 4 2 0 1 
+    // ]
+    /**
+     * 
+     * @param {number[][]} A 
+     */
+    LUDecomp(A, start){
+        let B;
+        if(start === A.length-1) return A;
+        let firstCol0s = A.map((row, i)=>
+            i === start ? A[i] : A[i].map((ele, idx) => (A[i][idx] - (A[i][0]/A[0][0])*A[0][idx] ))
+)
+        console.log(firstCol0s)
+        return this.LUDecomp(firstCol0s, start+1)
+        // Matrix.displayMatrix(firstCol0s)
+    },
     /**
      * TODO : Finish this beast.
      * Essentially, this is supposed to calculate the determinant of any NxN matrix

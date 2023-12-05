@@ -76,10 +76,64 @@ const x = [
     [3,3],
     [-2,4],
 ]
-let Jx = Matrix.multiply(J, x);
+// let Jx = Matrix.multiply(J, x);
 
-let vectorEq = J.map((Jrow, idx)=> x.map((row, i)=> `${row[0]}*${Jrow[i]}`).join(" + ") + ` = ${Jx[idx]}`).join("\n")
-console.log(vectorEq)
+// let vectorEq = J.map((Jrow, idx)=> x.map((row, i)=> `${row[0]}*${Jrow[i]}`).join(" + ") + ` = ${Jx[idx]}`).join("\n")
+// console.log(vectorEq)
+const byjusEx = [
+    [1, 1, 1],
+    [3, 1, -3],
+    [1, -2, -5]
+]
+// const luDecomposition = (matrix) => matrix.map((row, i) => matrix[i].map((val, j) => j < i ? matrix[j].reduce((acc, cur, k) => acc - cur * matrix[i][k], val) : val));
+
+// console.log(luDecomposition(byjusEx))
+const luDecomp = (matrix) =>{
+    return matrix.map((row, i)=>{
+        return matrix[i].map((val, j) => 
+        j !== i 
+            ? val : 
+            matrix[j].reduce((acc, cur, idx)=> acc - cur * matrix[i][idx], val) )
+    })
+}
+
+let res = luDecomp(byjusEx)
+console.log(res)
+
+
+
+
+
+
+
+// let idx = [0,1,2]
+// let res = idx.map((ele)=>{
+//     let row = byjusEx[ele].slice();
+//     for(let i =0; i < ele; i++){
+//         // byjusEx[ele][i] = a_{ele, i}, byjusEx[i][i]] = a_{i, i}
+//         let factor = byjusEx[ele][i] / byjusEx[i][i]
+//         for(let j=0; j < byjusEx[ele].length; j++){
+//             row[j] -= factor * byjusEx[i][j]
+//         }
+//     }
+//     return row
+    
+    
+    // console.log(`Iter: ${ele}`)
+    // return byjusEx.map((_, idx)=>{
+    //     return byjusEx[idx].map((val, i) => i === idx ? val : val - byjusEx[ele][i]*(byjusEx[ele][idx] / byjusEx[ele][ele]))
+    // })
+    // let temp = byjusEx.filter((_, i)=> i !== ele)
+    // Matrix.displayMatrix(temp)
+// })
+// Matrix.displayMatrix(res)
+// console.log(res)
+
+
+// let test = [...byjusEx.filter()]
+// console.log(test)
+// console.log(RowOps.LUDecomp(byjusEx, 0))
+
 // console.log(Problems.makeVectorEquation(J, x))
 // console.log(Problems.multiplyAndAddTwo(u, v))
 // console.log(Matrix.scalarMultiply(H, 2))
