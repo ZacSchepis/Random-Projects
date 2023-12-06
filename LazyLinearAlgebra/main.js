@@ -4,6 +4,19 @@ const {Matrix} = require('./Eigen')
 const {Problems} = require('./ProblemTypes')
 
 
+let x = [[10],[-3]]
+let y = [[-1],[-5]]
+// let temp = [[-30], [40]]
+// console.log(Matrix.unitVector(temp))
+let a = [[8], [-5]]
+let b = [[-2],[-3]]
+
+let u = [[3],[2],[-5],[0]]
+let v = [[-4],[1],[-2],[6]]
+
+console.log(Problems.isOrthogonal(a,b))
+/*
+
 // const {ChemParser} = require('./chemParser')
 // chemParser.ChemParser("2 H2 + O2 = 2 H2O")
 const A = [
@@ -77,28 +90,28 @@ const x = [
     [-2,4],
 ]
 // let Jx = Matrix.multiply(J, x);
-
+*/
 // let vectorEq = J.map((Jrow, idx)=> x.map((row, i)=> `${row[0]}*${Jrow[i]}`).join(" + ") + ` = ${Jx[idx]}`).join("\n")
 // console.log(vectorEq)
-const byjusEx = [
-    [1, 1, 1],
-    [3, 1, -3],
-    [1, -2, -5]
-]
-// const luDecomposition = (matrix) => matrix.map((row, i) => matrix[i].map((val, j) => j < i ? matrix[j].reduce((acc, cur, k) => acc - cur * matrix[i][k], val) : val));
+// const byjusEx = [
+//     [1, 1, 1],
+//     [3, 1, -3],
+//     [1, -2, -5]
+// ]
+// // const luDecomposition = (matrix) => matrix.map((row, i) => matrix[i].map((val, j) => j < i ? matrix[j].reduce((acc, cur, k) => acc - cur * matrix[i][k], val) : val));
 
-// console.log(luDecomposition(byjusEx))
-const luDecomp = (matrix) =>{
-    return matrix.map((row, i)=>{
-        return matrix[i].map((val, j) => 
-        j !== i 
-            ? val : 
-            matrix[j].reduce((acc, cur, idx)=> acc - cur * matrix[i][idx], val) )
-    })
-}
+// // console.log(luDecomposition(byjusEx))
+// const luDecomp = (matrix) =>{
+//     return matrix.map((row, i)=>{
+//         return matrix[i].map((val, j) => 
+//         j !== i 
+//             ? val : 
+//             matrix[j].reduce((acc, cur, idx)=> acc - cur * matrix[i][idx], val) )
+//     })
+// }
 
-let res = luDecomp(byjusEx)
-console.log(res)
+// let res = luDecomp(byjusEx)
+// console.log(res)
 
 
 

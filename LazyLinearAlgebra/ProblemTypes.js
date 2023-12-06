@@ -33,6 +33,18 @@ const Problems = {
         // return x.reduce((acc, col, i) => acc + `${col[0]}*[${A[i]}]` ,  "")
         // return A.reduce((acc, row, i)=> acc + row.map((n, j)=> `${n}*x${j}`).join(" + ") + ` = ${Ax[i][0]}\n`, "")
         return A[0].map((_, j) => `${A.map((row, i) => `${row[j]}*x${i}`).join(" + ")} = ${A.reduce((acc, row, i)=> acc + row[j] * x[i][0], 0)}`).join("\n")
+    },
+    computeVectorLength(u){
+        return Matrix.dist(u);
+    },
+    distanceBetweenVectors(u, v){
+        return Matrix.distBetween(u, v)
+    },
+    computeUnitVector(u){
+        return Matrix.unitVector(u);
+    },
+    isOrthogonal(u, v){
+        return Matrix.orthogonal(u, v);
     }
 }
 

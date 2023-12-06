@@ -48,15 +48,17 @@ const Matrix = {
      * Adds two matrices together
      * @param {number[][]} A - a 2D array of integers representing a matrix
      * @param {number[][]} B - a 2D array of integers representing a matrix
+     * @param {number} [a=1] a - scaler for a
+     * @param {number} [b=1] b - scaler for a
      * @returns {number[][]} - A 2D array that is the result of adding matrices A and B
      */
-    add(A, B){
+    add(A, B, a, b){
         const compared = this.compareSizes(A, B)
         if(!compared.canAdd){
             throw new Error(compared.messages.addError)
         }
         return A.map((rowA, i)=>{
-            return rowA.map((eleA, j) => parseFloat((eleA + B[i][j]).toFixed(3)))
+            return rowA.map((eleA, j) => parseFloat((a*eleA + b*B[i][j]).toFixed(3)))
         })
     },
     /**
@@ -75,6 +77,42 @@ const Matrix = {
         )
     },
     /**
+     * Computes the "Inner" (Dot) product of two vectors
+     * @param {number[][]} u - first vector 
+     * @param {number[][]} v - second vector
+     * @returns {number[][]}
+     */
+    dot(u, v){
+        return Matrix.multiply(Matrix.Transformations.transpose(u), v);
+    },
+    /**
+     * Returns the distance (or length or norm) of a vector
+     * @param {number[][]} u - vector to find the distance of 
+     * @returns 
+     */
+    dist(u){
+        let udot = this.dot(u, u);
+        return Math.sqrt(udot)
+    },
+    /**
+     * Finds the distance between u and v
+     * @param {number[][]} u - first vector 
+     * @param {number[][]} v - second vector
+     * @returns returns this distance between the two vectors
+     */
+    distBetween(u, v){
+        return this.dist(this.add(u, v, 1, -1))
+    },
+    /**
+     * Compute the unit vector of vector u
+     * @param {number[][]} u 
+     * @returns {number[][]}
+     */
+    unitVector(u){
+        return this.scalarMultiply(u, 1 / this.dist(u))
+    },
+    
+    /**
      * Multiplies a matrix by some scalar value
      * @param {number[][]} A - a 2D array to multiply by some x
      * @param {number} x - any scalar x 
@@ -82,6 +120,9 @@ const Matrix = {
      */
     scalarMultiply(A, x){
         return A.map((ele, i) => ele.map((num)=> num*x))
+    },
+    orthogonal(u, v){
+        return this.dot(u ,v).flat() == 0
     },
     Transformations: {
         /**
