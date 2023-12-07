@@ -419,4 +419,4 @@ const Demonstrate = {
     }
 }
 // Demonstrate.makeNxNIdentity()
-module.exports = {Matrix, lazyEigens};
+module.exports = {Matrix};
