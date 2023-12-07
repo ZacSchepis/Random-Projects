@@ -1,3 +1,6 @@
 chemParser.js
 *.tex
 lazyHomework.js
+node_modules
+test.html
+*.json
