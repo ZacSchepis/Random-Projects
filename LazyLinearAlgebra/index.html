@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matrix Operations Calculator</title>
-
+    <link rel="stylesheet" href="node_modules/xterm/css/xterm.css" />
+    <script src="node_modules/xterm/lib/xterm.js"></script>
     <script>
         function parseMatrix(matrix_id) {
             const matrixInput = document.getElementById(matrix_id).value
@@ -22,10 +23,10 @@
             let matrix2 = parseMatrix("matrixInput2")
             let res = []
             if(operation === "add"){
-                res = Matrix.add(matrix1, matrix2)
+                res = Matrix.ops.add(matrix1, matrix2)
             }
             else if(operation === "mult"){
-                res = Matrix.multiply(matrix1, matrix2)
+                res = Matrix.ops.multiply(matrix1, matrix2)
             }
             document.getElementById('rendered').innerHTML = formatMatrix(res)
             MathJax.typeset();
@@ -60,6 +61,13 @@
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
+
+    <script>
+        var term = new Terminal();
+        term.open(document.getElementById('terminal'));
+        term.write('Hello from \x1B[1;3;31mxterm.js\x1B[0m $ ')
+      </script>
+
     <h1>Matrix Operations Calculator</h1>
     <label for="operation">Choose an operation:</label>
     <select id="operation" onchange="showInputs()">

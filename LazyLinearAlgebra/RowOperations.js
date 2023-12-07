@@ -1,4 +1,4 @@
-const {Matrix} = require('./Eigen')
+const {Matrix} = require('./Matrix')
 
 // /**
 //  * 

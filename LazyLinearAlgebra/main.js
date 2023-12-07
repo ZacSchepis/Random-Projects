@@ -1,20 +1,28 @@
 const chemParser = require('./chemParser')
 const {RowOps} = require("./RowOperations")
-const {Matrix} = require('./Eigen')
+const {Matrix} = require('./Matrix')
 const {Problems} = require('./ProblemTypes')
 
+let u_1 = [[3], [1], [1]]
+let u_2 = [[-1], [2], [1]]
+let u_3 = [[-.5], [-2], [3.5]]
 
-let x = [[10],[-3]]
-let y = [[-1],[-5]]
-// let temp = [[-30], [40]]
-// console.log(Matrix.unitVector(temp))
-let a = [[8], [-5]]
-let b = [[-2],[-3]]
+let isOr = Matrix.vector.ops.orthogonalSet([u_1, u_2, u_3])
 
-let u = [[3],[2],[-5],[0]]
-let v = [[-4],[1],[-2],[6]]
 
-console.log(Problems.isOrthogonal(a,b))
+let y = [[7], [6]]
+let u = [[4], [2]]
+
+// console.log(Matrix.vector.ops.hat(y, u))
+console.log(Matrix.vector.ops.hat([[1], [7]], [[-4], [2]]))
+
+// let pairs = orthSet.flatMap((_, i) => orthSet.slice(i + 1).map(j => [i, j]));
+
+// // makePairs(vectors){
+// //     return vectors.map((ele, i) => )
+// // }
+// console.log(pairs)
+
 /*
 
 // const {ChemParser} = require('./chemParser')
