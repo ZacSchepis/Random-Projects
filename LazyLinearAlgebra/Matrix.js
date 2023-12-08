@@ -54,6 +54,8 @@ const Matrix = {
          * @returns {number[][]} - A 2D array that is the result of adding matrices A and B
          */
         add(A, B, a, b){
+            a = a ?? 1
+            b = b ?? 1
             const compared = this.compareSizes(A, B)
             if(!compared.canAdd){
                 throw new Error(compared.messages.addError)

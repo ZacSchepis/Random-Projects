@@ -7,9 +7,9 @@
 
     <script>
         function parseMatrix(matrix_id) {
-            const matrixInput = document.getElementById(matrix_id).value
-            const rows = matrixInput.trim().split('\n');
-            const matrix = rows.map( row => row.split(/\s+/).map(Number));
+            let matrixInput = document.getElementById(matrix_id).value
+            let rows = matrixInput.trim().split('\n');
+            let matrix = rows.map( row => row.split(/\s+/).map(Number));
             // document.getElementById('rendered').innerHTML = `\\[ ${latex_matrix} \\]`
             // MathJax.typeset();
             return matrix;

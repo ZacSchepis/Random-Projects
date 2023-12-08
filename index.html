@@ -4,39 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matrix Operations Calculator</title>
-    <script>
-        // Your JavaScript code goes here
-        // You can copy and paste your matrix determinant calculation code here
-    </script>
-        <script>
-            function parseMatrix(matrix_id) {
-                const matrixInput = document.getElementById(matrix_id).value
-                const rows = matrixInput.trim().split('\n');
-                const matrix = rows.map( row => row.split(/\s+/).map(Number));
-                // document.getElementById('rendered').innerHTML = `\\[ ${latex_matrix} \\]`
-                // MathJax.typeset();
-                return matrix;
-            }
-            function formatMatrix(matrix){
-                return `\\[ ${Matrix.Utilities.toLaTeX(matrix)} \\]`
-            }
-            function matrixOps(operation){
-                let matrix1 = parseMatrix("matrixInput1");
-                let matrix2 = parseMatrix("matrixInput2")
-                let res = []
-                if(operation === "add"){
-                    res = Matrix.add(matrix1, matrix2)
-                }
-                else if(operation === "mult"){
-                    res = Matrix.multiply(matrix1, matrix2)
-                }
-                document.getElementById('rendered').innerHTML = formatMatrix(res)
-                MathJax.typeset();
 
+    <script>
+        function parseMatrix(matrix_id) {
+            const matrixInput = document.getElementById(matrix_id).value
+            const rows = matrixInput.trim().split('\n');
+            const matrix = rows.map( row => row.split(/\s+/).map(Number));
+            // document.getElementById('rendered').innerHTML = `\\[ ${latex_matrix} \\]`
+            // MathJax.typeset();
+            return matrix;
+        }
+        function formatMatrix(matrix){
+            return `\\[ ${Matrix.Utilities.toLaTeX(matrix)} \\]`
+        }
+        function matrixOps(operation){
+            let matrix1 = parseMatrix("matrixInput1");
+            let matrix2 = parseMatrix("matrixInput2")
+            let res = []
+            if(operation === "add"){
+                res = Matrix.ops.add(matrix1, matrix2)
             }
-            // You can add additional JavaScript code for user interaction here
-        </script>
-    <script src="/LazyLinearAlgebra/Matrix.js"></script>
+            else if(operation === "mult"){
+                res = Matrix.ops.multiply(matrix1, matrix2)
+            }
+            document.getElementById('rendered').innerHTML = formatMatrix(res)
+            MathJax.typeset();
+
+        }
+        // You can add additional JavaScript code for user interaction here
+    </script>
+    <script src="./LazyLinearAlgebra/Matrix.js"></script>
     <script>
         MathJax = {
           tex: {
@@ -53,13 +50,36 @@
           loader: {load: ['[tex]/ams']}
         };
     </script>
+    <style>
+        .matrix-input{
+            margin-bottom: 10px
+        }
+    </style>
+
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
+
+
     <h1>Matrix Operations Calculator</h1>
-    <!-- <label for="matrixInput">Enter Matrix:</label> -->
-    <!-- <textarea id="matrixInput" rows="5" cols="50"></textarea> -->
+    <label for="operation">Choose an operation:</label>
+    <select id="operation" onchange="showInputs()">
+        <option value="default">Select an operation</option>
+        <option value="multiplyMatrices">Multiply 2 Matrices</option>
+    </select>
+    <script>
+        function showInputs(){
+            let operationSelect = document.getElementById("operation");
+            let matrixInputsDiv = document.getElementById("matrixInputs");
+            matrixInputsDiv.innerHTML = "";
+        }
+    </script>
+    <div id="matrixInputs"></div>
+
+
+
+
     <label for="matrixInput1">Matrix 1:</label>
     <textarea id="matrixInput1" placeholder="Enter matrix 1"></textarea>
     
