@@ -87,9 +87,24 @@ const Matrix = {
          * @param {number} x - any scalar x 
          * @returns {number[][]}
          */
-            scalarMultiply(A, x){
-                return A.map((ele, i) => parseFloat(ele.map((num)=> num*x)).toFixed(3))
-            },
+        scalarMultiply(A, x){
+            return A.map(ele => ele.map(num=> parseFloat((num*x).toFixed(3))))
+        },
+        /**
+         * Adds many vectors/matrices together.
+         * Note: each reduce call actually will subtract the next vector from the
+         * acc variable because this is best used in Gram-Schmidt. Might change
+         * later. 
+         * @param {number[][][]} vectors - list of vectors
+         * @param {number[][]} y -a single vector. 
+         * @returns {number[][]}
+         */
+        addMany(vectors, y){
+            return vectors.reduce((acc, vector, i)=>{
+                return Matrix.ops.add(acc, vector, 1, -1);
+            }, y)
+
+        },
     },
 
     vector:{
@@ -113,6 +128,36 @@ const Matrix = {
             return u.reduce((acc, ele, i) => ele[i] === v[i] ? true : acc, false)
         },
         ops:{
+            /**
+             * "The Gram-Schmidt Process is a simple algorithm
+             * for producing an orthogonal or orthonormal basis for any nonzero subspace of R^n."
+             * - David C. Lay, et. al., 2020 pg 376 of 6th ed
+             * @param {number[][][]} vectors - list of vectors to do this process on 
+             * @returns {number[][][]} returns the orthogonal basis of the original set
+             */
+            GramSchmidt(vectors){
+                // Shifting the copied result of the original set of vectors 
+                // so nothing is lost. Setting initial vector to that value
+                let copiedArray = [...vectors]
+                w = [copiedArray.shift()]
+                return copiedArray.map((v_c, _) =>{
+                    // Getting a copy of all of $w_{i}$'s current values, except:
+                    // each vector is replaced with the projection of v_c onto v, where
+                    // v is the current vector from w and v_c is the current vector
+                    let nextVSums = w.map((v, _) => this.vectorProjection(v_c, v))
+                    // then we will add all of these together essentially, well:
+                    // $v_{i} = x_{i} - proj_{w_{i}} x_{i}$
+                    // where v_i is the next vector in the set to compute
+                    // x_i is the current vector to compute the projection of 
+                    // x_i onto each vector in w (at this moment)
+                    let res = Matrix.ops.addMany(nextVSums, v_c)
+                    w.push(res)
+                    return w
+                })
+            },
+            projectOntoVectors(vectors, y){
+                return vectors.map((v, i) => Matrix.add(this.vectorProjection(y, v), 1, -1))
+            },
             /**
              * Checks if two vectors are orthogonal
              * @param {number[][]} u - first vector
@@ -154,6 +199,9 @@ const Matrix = {
                 Matrix.vector.validate(u, v)
                 return Matrix.ops.multiply(Matrix.Transformations.transpose(u), v);
             },
+            hat(y, u){
+                return Matrix.ops.add(y, (this.dot(y, u) / this.dot(u, u)), 1, -1)
+            },
             /**
              * Returns the distance (or length or norm) of a vector
              * @param {number[][]} u - vector to find the distance of 
@@ -181,14 +229,15 @@ const Matrix = {
              */
             vectorProjection(y, u){
                 Matrix.vector.validate(y, u);
-                return Matrix.ops.scalarMultiply(u, (this.dot(y, u) / this.dot(u, u)))
+                let prod = (this.dot(y, u) / this.dot(u, u))
+                return Matrix.ops.scalarMultiply(u, prod)
                 
             }, 
             orthogonalBasis(vectors, y){
-                return vectors.map(vector => {
+                return vectors.map((vector,i) => {
                     let frac = this.scalarProjectionRatio(y, vector);
                     return `$\\frac{${frac.num}}{${frac.denom}}${Matrix.Utilities.toLaTeX(vector)}$`
-                }).join(' + \n')
+                }).join(' + \n') + `$ = ${Matrix.Utilities.toLaTeX(y)}$`
             },
             /**
              * Computes the scalar proejction ratio of the vector y onto the vector u.
@@ -199,7 +248,7 @@ const Matrix = {
             scalarProjectionRatio(y, u){
                 Matrix.vector.validate(y, u);
                 let vals = [this.dot(y, u), this.dot(u, u)]
-                console.log(vals)
+                // console.log(vals)
                 return {num: vals[0], denom: vals[1]}
             }
         }

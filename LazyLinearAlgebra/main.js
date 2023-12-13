@@ -2,19 +2,142 @@ const chemParser = require('./chemParser')
 const {RowOps} = require("./RowOperations")
 const {Matrix} = require('./Matrix')
 const {Problems} = require('./ProblemTypes')
-
-let u_1 = [[3], [1], [1]]
-let u_2 = [[-1], [2], [1]]
-let u_3 = [[-.5], [-2], [3.5]]
-
-let isOr = Matrix.vector.ops.orthogonalSet([u_1, u_2, u_3])
+const vector = (v) => v.map(ele => [ele])
+const zeroVector = (n) => { return Array.from({ length: n }, (_, i) => Array.from({length: 1}, (_, j) => 0))}
+// let isOr = Matrix.vector.ops.orthogonalSet([u_1, u_2, u_3])
 
 
-let y = [[7], [6]]
-let u = [[4], [2]]
+// const toMatrix = (vectors) =>{
+//     return vectors.map((_, vIdx) => {
+//         return vectors[vIdx].map((_, rIdx) => {
+//             // console.log(vectors[vIdx][rIdx] , rIdx)
+//             console.log([...vectors[rIdx]])
+//             return vectors[vIdx][rIdx]
+//         })
+//     })
+//     // return 0
+// }
 
-// console.log(Matrix.vector.ops.hat(y, u))
-console.log(Matrix.vector.ops.hat([[1], [7]], [[-4], [2]]))
+const toMatrix = (vectors) => {
+    return vectors[0].map((_, row)=> vectors.map((_, col) => vectors[col][row][0]))
+}
+/**
+ * 
+ * @param {number[][]} matrix 
+ * @returns {number[][][]}
+ */
+const toVectors = (matrix) =>{
+    return matrix[0].map((_, row)=> matrix.map((_, col) => [matrix[col][row]]))
+}
+
+/**
+ * 
+ * @param {number[][][]} vectors 
+ * @returns {number[][][]}
+ */
+const GramSchmidt = (vectors) =>{
+
+}
+const recursiveAddition = (vectors, testVec) => {
+    return vectors.reduce((acc, ele, i) => {
+    // console.log(acc, ele)
+        return Matrix.ops.add(acc, ele, 1, -1)
+}, testVec )}
+// ? testVec : zeroVector(vectors[0].length)
+
+
+
+let A = [
+    [3, -5, 1],
+    [1, 1, 1],
+    [-1, 5, -2],
+    [3, -7, 8]
+]
+let B = [
+    [1, 2, 5],
+    [-1, 1, -4],
+    [-1, 4, -3],
+    [1, -4, 7],
+    [1, 2, 1]
+]
+let ans = [
+    [3,  1,-3],
+    [1,  3, 1], 
+    [-1, 3, 1],
+    [3, -1, 3]
+]
+const asVec = toVectors(B);
+let r = Matrix.vector.ops.GramSchmidt(asVec)
+
+
+
+console.log(r[0])
+const wrap = (vectors) => {
+    return `$$\\left\\{\n\t${vectors.map((ele, i) => Matrix.Utilities.toLaTeX(ele)).join("\n\t")}\n\\right\\}$$`
+}
+
+console.log(`The Gram-Schmidt Process of:\n${wrap(asVec)}\nis this:\n${wrap(r[0])}`)
+// console.log(wrap(r[0]))
+
+
+// let str_res = '$\\left\\{\n$'
+// r[0].forEach((ele, i)=>{
+//     str_res += "\t$"+Matrix.Utilities.toLaTeX(ele)+"$\n"
+//     // console.log(`$\\left\{${Matrix.Utilities.toLaTeX(ele)}]$\n`);
+// })
+// console.log(str_res+"$\\right\\}$")
+// let first = asVec.shift()
+
+// console.log(`Shifted element (first)$${Matrix.Utilities.toLaTeX(first)}$`)
+// asVec.forEach((ele, i)=>{
+//     console.log(`(post shift) Vectors[${i}]: $${Matrix.Utilities.toLaTeX(ele)}$\n`);
+// })
+
+
+
+let added = recursiveAddition(asVec, asVec[0])
+let temp = asVec[0]
+
+// let gs = JackShit(asVec)
+
+// let r = asVec.map((ele, i) => i === 0? asVec[0] : i +1 === asVec.length ? asVec[i] : Matrix.ops.add(asVec[i], asVec[i+1], 1, 1))
+// console.log([...asVec[1]])
+// console.log(r)
+// // Matrix.vector.ops.GramSchmidt(asVec)
+
+
+// let w = [asVec[0]];
+// let v = [asVec[0]];
+
+// let p_1 = Matrix.vector.ops.orthogonalBasis([asVec[0]], asVec[1])
+// let p_2 = Matrix.vector.ops.orthogonalBasis([asVec])
+
+// asVec.forEach((vector_, i)=>{
+//     console.log(vector_)
+// })
+
+
+
+
+
+
+// console.log(testVectors)
+
+
+
+
+
+// let x1 = vector([3, 6,0])
+// let x2 = vector([1, 2,2])
+// // Matrix.vector.ops.GramSchmidt([x1, x2])
+// let xs = [x1, x2]
+// let w = [xs[0]];
+// let vs = [xs[0]];
+
+
+
+// console.log(Matrix.vector.ops.hat(y, u ))
+// console.log(Matrix.vector.ops.hat([[1], [7]], [[-4], [2]]))
 
 // let pairs = orthSet.flatMap((_, i) => orthSet.slice(i + 1).map(j => [i, j]));
 
