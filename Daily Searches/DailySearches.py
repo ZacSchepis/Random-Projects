@@ -115,10 +115,12 @@ def search(device_type:str, verbose:int):
     for searches in range(num_searches+1):
         sleep(3)
         if verbose==1: print(f'{"="*10}\nSearch #{searches}')
-        if searches % (num_searches/2) == 1:
-            search_str = next_char()
-            if verbose==1: print(f'UPDATED SEARCH_STR: {search_str}')
-        search_str += next_char()
+        if searches % random.randint(1, 5) == 1:
+            search_str = ""
+        # if searches % (num_searches/2) == 1:
+            # search_str = next_char()
+            # if verbose==1: print(f'UPDATED SEARCH_STR: {search_str}')
+        search_str += "".join([next_char() for i in range(random.randint(1, 5))]) 
         enter_search(search_str, verbose)
     close_edge()
 
@@ -137,3 +139,5 @@ def next_char():
     ]
     idxs = [x for x in range(len(chars))]
     return random.choice(chars[random.choice(idxs)])
+
+
